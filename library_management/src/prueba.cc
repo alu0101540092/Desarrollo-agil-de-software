@@ -1,14 +1,21 @@
-#include "book.h"
-#include "loan.h"
-#include "user.h"
-#include <iostream>
-class Author {
-public:
-  Author(const std::string& name) : name_(name) {}
+/**
+ * @brief Test of the classes Loan, Book and User
+*/
 
-private:
-  std::string name_;
+#include "../include/loan.h"
+#include "../include/book.h"
+#include "../include/user.h"
+
+#include <iostream>
+
+class Author {
+  public:
+    Author(const std::string& name) : name_(name) {}
+
+  private:
+    std::string name_;
 };
+
 int main() {
   Author author("Miguel de Cervantes");
   Book book("El Quijote", 1, author);

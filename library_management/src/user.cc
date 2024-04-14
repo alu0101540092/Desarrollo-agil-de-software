@@ -10,8 +10,9 @@
  * @brief Definitons of the User class
  * @bug
  * @see
- */
-#include "user.h"
+*/
+
+#include "../include/user.h"
 
 /**
  * @brief Overload of the operator << to allow the printing of

@@ -10,11 +10,12 @@
  * @brief Definitons of the Loan class
  * @bug
  * @see
- */
-#include "loan.h"
+*/
 
-#include "book.h"
-#include "user.h"
+#include "../include/loan.h"
+#include "../include/book.h"
+#include "../include/user.h"
+
 /**
  * @brief Overload of the operator << to allow the printing of
  * objets of the class Loan
@@ -27,6 +28,7 @@ std::ostream& operator<<(std::ostream& output, const Loan& loan) {
          << ", borrowed book named " << loan.GetBookBorrowed();
   return output;
 }
+
 /**
  * @brief Tells whether a loan has its time limit exceeded
  * @return true if it has false otherwise

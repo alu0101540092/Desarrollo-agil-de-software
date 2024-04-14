@@ -10,8 +10,9 @@
  * @brief Definitons of the Book class
  * @bug
  * @see
- */
-#include "book.h"
+*/
+
+#include "../include/book.h"
 
 /**
  * @brief Overload of the operator << to allow the printing of
