@@ -10,7 +10,7 @@
  * @brief Declarations of the User class
  * @bug
  * @see
-*/
+ */
 
 #ifndef USER_H_
 #define USER_H_
@@ -28,26 +28,28 @@ class Catalog;
  * @brief Represents a user of a library
  */
 class User {
-  public:
-    User(const std::string& name, const int indentifier,
-        const std::string& password)
-        : name_(name),
-          password_(password),
-          identifier_(indentifier),
-          is_authenticated_(false){};
-    bool IsAuthenticated() const { return is_authenticated_; };
-    bool Login(const std::string& users_data);
-    bool BorrowBook(const Catalog& catalog, const std::string& book_name);
-    bool ReturnBook(const Catalog& catalog, const std::string& book_name);
-    std::string GetName() const { return name_; };
-    int GetIdentifier() const { return identifier_; };
+public:
+  User(const std::string& name, const int indentifier,
+       const std::string& password)
+      : name_(name),
+        password_(password),
+        identifier_(indentifier),
+        is_authenticated_(false){};
+  bool IsAuthenticated() const { return is_authenticated_; };
+  bool Login(const std::string& password) {
+    is_authenticated_ = (password == password_);
+  };
+  bool BorrowBook(const Catalog& catalog, const std::string& book_name);
+  bool ReturnBook(const Catalog& catalog, const std::string& book_name);
+  std::string GetName() const { return name_; };
+  int GetIdentifier() const { return identifier_; };
 
-  private:
-    std::string name_;
-    std::string password_;
-    int identifier_;
-    bool is_authenticated_;
-    std::vector<Loan> borrowed_books_list_;
+private:
+  std::string name_;
+  std::string password_;
+  int identifier_;
+  bool is_authenticated_;
+  std::vector<Loan> borrowed_books_list_;
 };
 
 std::ostream& operator<<(std::ostream& output, const User& user);
