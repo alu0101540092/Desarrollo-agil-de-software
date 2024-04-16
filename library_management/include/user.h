@@ -5,44 +5,37 @@
  * Fundamentos de Ingeniería del Sofware 2023-2024
  * Práctica 6 : Desarrollo ágil de software
  *
- * @author Samuel Rodríguez alu0101545714@ull.edu.es
+ * @author
  * @date 14/04/2024
  * @brief Declarations of the User class
  * @bug
  * @see
  */
 
-#ifndef USER_H_
-#define USER_H_
 
 #include <iostream>
 #include <string>
 #include <vector>
-
 #include "loan.h"
 
-class Loan;
-class Catalog;
+#pragma once
 
 /**
  * @brief Represents a user of a library
  */
 class User {
 public:
-  User(const std::string& name, const int indentifier,
-       const std::string& password)
-      : name_(name),
-        password_(password),
-        identifier_(indentifier),
-        is_authenticated_(false){};
-  bool IsAuthenticated() const { return is_authenticated_; };
-  bool Login(const std::string& password) {
-    is_authenticated_ = (password == password_);
-  };
-  bool BorrowBook(const Catalog& catalog, const std::string& book_name);
-  bool ReturnBook(const Catalog& catalog, const std::string& book_name);
-  std::string GetName() const { return name_; };
-  int GetIdentifier() const { return identifier_; };
+  /// CONSTRUCTORS
+  User(const std::string& name, const int indentifier, const std::string& password);
+  /// MEMBER FUNCTIONS
+  bool IsAuthenticated() const;
+  bool Login(const std::string& password);
+  // bool BorrowBook(const Catalog& catalog, const std::string& book_name);
+  // bool ReturnBook(const Catalog& catalog, const std::string& book_name);
+  /// GETTERS & SETTERS
+  std::string GetName() const;
+  int GetIdentifier() const;
+  void SetPassword(const std::string& password);
 
 private:
   std::string name_;
@@ -53,5 +46,3 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& output, const User& user);
-
-#endif  // USER_H_

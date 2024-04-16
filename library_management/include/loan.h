@@ -5,44 +5,39 @@
  * Fundamentos de Ingeniería del Sofware 2023-2024
  * Práctica 6 : Desarrollo ágil de software
  *
- * @author Samuel Rodríguez alu0101545714@ull.edu.es
+ * @author
  * @date 14/04/2024
  * @brief Declarations of the Loan class
  * @bug
  * @see
 */
 
-#ifndef LOAN_H_
-#define LOAN_H_
-
 #include <chrono>
 #include <iostream>
+#include "book.h"
 
-class Book;
-class User;
+#pragma once
+
 /**
  * @brief Represents a loan of a book
  */
 class Loan {
-  public:
-    Loan(const Book& book_borrowed, const User& borrower)
-        : borrower_(borrower),
-          book_borrowed_(book_borrowed),
-          loan_time_(std::chrono::system_clock::now()),
-          returned_(false){};
-    bool IsReturned() const { return returned_; };
-    void SetAsReturned() { returned_ = true; };
-    bool TimeLimitExceeded() const;
-    const User& GetBorrower() const { return borrower_; };
-    const Book& GetBookBorrowed() const { return book_borrowed_; };
+ public:
+  /// CONSTRUCTORS
+  Loan(const Book& book_borrowed);
 
-  private:
-    const User& borrower_;
-    const Book& book_borrowed_;
-    std::chrono::system_clock::time_point loan_time_;
-    bool returned_;
+  /// MEMBER FUNCTIONS
+  bool IsReturned() const;
+  void SetAsReturned();
+  bool TimeLimitExceeded() const;
+
+  /// GETTERS & SETTERS
+  const Book& GetBookBorrowed() const;
+
+ private:
+  const Book& book_borrowed_;
+  std::chrono::system_clock::time_point loan_time_;
+  bool returned_;
 };
 
 std::ostream& operator<<(std::ostream& output, const Loan& loan);
-
-#endif  // LOAN_H_

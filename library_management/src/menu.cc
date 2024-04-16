@@ -5,7 +5,7 @@
  * Fundamentos de Ingeniería del Sofware 2023-2024
  * Práctica 6 : Desarrollo ágil de software
  *
- * @author Paulo Padilla Domingues alu0101571836@ull.edu.es
+ * @author 
  * @date 15/04/2024
  * @brief User menu
  * @bug
@@ -14,8 +14,14 @@
 #include "../include/book.h"
 #include "../include/user.h"
 #include "../include/tools.h"
+#include "../include/system.h"
+
+// ToDo : enum BookState
+// ToDo : main -> constructor system. Procesar ficheros
+// ToDo : Loan,Reserve... darle una vuelta a esas clases
 
 int main(int argc, char* argv[]) {
-  CurrentUserMenu();
+  System system;
+  CurrentUserMenu(system);
   return 0;
 }

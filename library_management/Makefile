@@ -1,4 +1,4 @@
-CXX := g++
+CXX := g++ -fmax-errors=1
 SRC_DIR := src
 BUILD_DIR := build
 

@@ -5,17 +5,28 @@
  * Fundamentos de Ingeniería del Sofware 2023-2024
  * Práctica 6 : Desarrollo ágil de software
  *
- * @author Paulo Padilla Domingues alu0101571836@ull.edu.es
+ * @author
  * @date 15/04/2024
  * @brief Function declaration tools
  * @bug
  * @see
 */
-#ifndef TOOLS_H_
-#define TOOLS_H_
 
 #include <iostream>
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <cctype>
+#include <algorithm>
+#include "system.h"
+#include "book.h"
+#include "user.h"
 
-void CurrentUserMenu(void);
+#pragma once
 
-#endif
+void CurrentUserMenu(System& system);
+void ProcessFileInput(const std::string& file_name, System& system);
+User NewUser();
+void SignIn(System& system);
+void Search(System& system);
+void Password(System& system, const User& user);
