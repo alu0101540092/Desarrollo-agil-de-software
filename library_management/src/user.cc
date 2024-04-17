@@ -15,12 +15,17 @@
 #include "../include/user.h"
 
 /**
+ * @brief Default constructor of the class User
+ */
+User::User() {}
+/**
  * @brief Constructor of the class User
  * @param name name of the user
  * @param identifier identifier of the user
  * @param password password of the user
  */
 User::User(const std::string& name, const int identifier,
+
            const std::string& password)
     : name_(name),
       password_(password),
@@ -73,7 +78,29 @@ std::string User::GetPassword() const { return password_; }
  * @return print of the user and reference to the output stream
  */
 std::ostream& operator<<(std::ostream& output, const User& user) {
-  output << user.GetName() << " " << user.GetIdentifier() << " "
-         << user.GetPassword();
+  output << user.GetName() << " " << user.GetIdentifier();
   return output;
+}
+/**
+ * @brief Overload of the operator  == to compare two users
+ * @param user_1 first user
+ * @param user_2 second user
+ * @return true if they are equal false if not
+ */
+bool operator==(const User& user_1, const User& user_2) {
+  if ((user_1.GetIdentifier() == user_2.GetIdentifier()) &&
+      (user_1.GetName() == user_2.GetName())) {
+    return true;
+  } else {
+    return false;
+  }
+}
+/**
+ * @brief Overload of the operator  != to compare two users
+ * @param user_1 first user
+ * @param user_2 second user
+ * @return false if they are equal true if they are not
+ */
+bool operator!=(const User& user_1, const User& user_2) {
+  return (!(user_1 == user_2));
 }

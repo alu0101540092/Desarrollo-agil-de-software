@@ -39,10 +39,10 @@ class System {
   void RemoveUser(const User& user);
   void RemoveAuthenticatedUser(const User& user);
 
-  void BorrowBook(Book& book);
-  void ReturnBook(Book& book);
-  void ReserveBook(Book& book);
-  void CancelReservation(Book& book);
+  void BorrowBook(Book& book, const User& user);
+  void ReturnBook(Book& book, const User& user);
+  void ReserveBook(Book& book, const User& user);
+  void CancelReservation(Book& book,const User& user);
   void ReportLostBook(Book& book);
   void ReportDamagedBook(Book& book);
 

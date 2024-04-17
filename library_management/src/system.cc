@@ -156,14 +156,24 @@ std::vector<User> System::GetAuthenticatedUsers() const {
  * @param book
  * @param user
  */
-void System::BorrowBook(Book& book) { book.SetBookState(BookState::borrowed); }
+void System::BorrowBook(Book& book, const User& user) {
+  book.SetBookState(BookState::borrowed);
+  book.SetOwner(user);
+}
 
 /**
  * @brief Function to return a book
  *
  * @param book
  */
-void System::ReturnBook(Book& book) { book.SetBookState(BookState::available); }
+void System::ReturnBook(Book& book, const User& user) {
+  if (user != book.GetOwner()) {
+    std::cerr << "Error: you do not have permission to return this book"
+              << std::endl;
+    return;
+  }
+  book.SetBookState(BookState::available);
+}
 
 /**
  * @brief Function to reserve a book
@@ -171,14 +181,23 @@ void System::ReturnBook(Book& book) { book.SetBookState(BookState::available); }
  * @param book
  * @param user
  */
-void System::ReserveBook(Book& book) { book.SetBookState(BookState::reserved); }
+void System::ReserveBook(Book& book, const User& user) {
+  book.SetBookState(BookState::reserved);
+  book.SetOwner(user);
+}
 
 /**
  * @brief Function to cancel a reservation
  *
  * @param book
  */
-void System::CancelReservation(Book& book) {
+void System::CancelReservation(Book& book, const User& user) {
+  book.SetBookState(BookState::available);
+  if (user != book.GetOwner()) {
+    std::cerr << "Error: you do not have permission to cancel the reservation"
+              << std::endl;
+    return;
+  }
   book.SetBookState(BookState::available);
 }
 

@@ -54,6 +54,16 @@ int Book::GetIdentifier() const { return identifier_; }
  */
 std::string Book::GetAuthor() const { return author_; }
 /**
+ * @brief Function to get the owner of the book
+ * @return owner of the book
+ */
+User Book::GetOwner() const { return owner_; }
+/**
+ * @brief Sets an owner to a book
+ * @param owner owner to set
+ */
+void Book::SetOwner(const User& owner) { owner_ = owner;};
+/**
  * @brief Overload of the operator << to allow the printing of
  * objets of the class Book
  * @param output reference to output stream
@@ -72,9 +82,11 @@ std::ostream& operator<<(std::ostream& output, const Book& book) {
     break;
   case borrowed:
     output << "B";
+    output << "," << book.GetOwner();
     break;
   case reserved:
     output << "R";
+    output << "," << book.GetOwner();
     break;
   case available:
     output << "A";

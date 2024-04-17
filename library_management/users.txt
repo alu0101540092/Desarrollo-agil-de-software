@@ -2,3 +2,4 @@ root 0 1234
 pepeprueba 1 prui
 prueba_escritura 2 12345
 prueba_registro 3 12345
+prueba_2 4 1234

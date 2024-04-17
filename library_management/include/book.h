@@ -15,6 +15,7 @@
 #include <iostream>
 #include <string>
 
+#include "user.h"
 #pragma once
 
 /**
@@ -37,13 +38,16 @@ public:
   std::string GetName() const;
   int GetIdentifier() const;
   std::string GetAuthor() const;
+  User GetOwner() const;
   void SetBookState(const BookState& state);
+  void SetOwner(const User& owner);
 
 private:
   std::string name_;
   int identifier_;
   BookState book_state_;
   std::string author_;
+  User owner_;
 };
 
 std::ostream& operator<<(std::ostream& output, const Book& book);

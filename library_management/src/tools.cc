@@ -101,7 +101,7 @@ void UserMenu(System& systema) {
   bool not_authenticated = true;
   User* sign_in_result{};
   bool continue_loop{true};
-  while (continue_loop) {
+  while (true) {
     while (not_authenticated) {
       std::cout << "\n###### Library Management ######\n";
       std::cout << "\nChoose one of the following options:\n";
@@ -130,7 +130,8 @@ void UserMenu(System& systema) {
         }
       }
     }
-    continue_loop = PostUserMenu(systema, *sign_in_result);
+    PostUserMenu(systema, *sign_in_result);
+    not_authenticated = true;
   }
 }
 
@@ -148,9 +149,12 @@ bool PostUserMenu(System& systema, User& user) {
     std::cout << "[1] Search for a book\n";
     std::cout << "[2] Change password\n";
     std::cout << "[3] Borrow book\n";
+    std::cout << "[4] Return book\n";
+    std::cout << "[5] Reserve book\n";
+    std::cout << "[6] Cancel reservation of book\n";
     std::cout << "\nOption: ";
     std::cin >> option;
-    if (option < 0 || option > 3) {
+    if (option < 0 || option > 7) {
       std::cout << "\nInvalid option\n";
     } else {
       switch (option) {
@@ -179,29 +183,143 @@ bool PostUserMenu(System& systema, User& user) {
         system("clear");
         Password(systema, user);
         break;
-      case 3:
+      case 3: {
         system("clear");
-        std::vector<Book*> results{Search(systema)};
-        /// Print occurrences
-        if (results.size() == 0) {
-          std::cout << "\nBook not found\n";
-        } else {
-          if (results.size() == 1) {
-            std::cout << "\nBook found\n";
-            std::cout << *results[0] << std::endl;
-          } else {
-            std::cout << "\nBooks found\n";
-            for (int i = 0; i < results.size(); i++) {
-              std::cout << "Book number: " << i + 1 << *results[i] << std::endl;
-            }
+        std::vector<Book*> available_books;
+        for (const auto& element : Search(systema)) {
+          if (element->GetBookState() == available) {
+            available_books.emplace_back(element);
           }
         }
-        int book_to_borrow{-1};
-        while (0 > book_to_borrow || book_to_borrow >= results.size()) {
-          std::cin >> book_to_borrow;
+        /// Print occurrences
+        if (available_books.size() == 0) {
+          std::cout << "\nBook not found\n";
+        } else {
+          if (available_books.size() == 1) {
+            std::cout << "\nBook found\n";
+            std::cout << *available_books[0] << std::endl;
+          } else {
+            std::cout << "\nBooks found\n";
+            for (int i = 0; i < available_books.size(); i++) {
+              std::cout << "Book number: " << i + 1 << *available_books[i]
+                        << std::endl;
+            }
+          }
+          int book_to_borrow{-1};
+          while (0 > book_to_borrow ||
+                 book_to_borrow >= available_books.size()) {
+            std::cout << "Enter the number of the book you want to borrow, "
+                         "starting from 0"
+                      << std::endl;
+            std::cin >> book_to_borrow;
+          }
+          systema.BorrowBook(*available_books[book_to_borrow], user);
         }
-        systema.BorrowBook(*results[book_to_borrow]);
         break;
+      }
+      case 4: {
+        system("clear");
+        std::vector<Book*> borrowed_books;
+        for (const auto& element : Search(systema)) {
+          if (element->GetBookState() == borrowed) {
+            borrowed_books.emplace_back(element);
+          }
+        }
+        /// Print occurrences
+        if (borrowed_books.size() == 0) {
+          std::cout << "\nBook not found\n";
+        } else {
+          if (borrowed_books.size() == 1) {
+            std::cout << "\nBook found\n";
+            std::cout << *borrowed_books[0] << std::endl;
+          } else {
+            std::cout << "\nBooks found\n";
+            for (int i = 0; i < borrowed_books.size(); i++) {
+              std::cout << "Book number: " << i + 1 << *borrowed_books[i]
+                        << std::endl;
+            }
+          }
+          int book_to_return{-1};
+          while (0 > book_to_return ||
+                 book_to_return >= borrowed_books.size()) {
+            std::cout << "Enter the number of the book you want to return, "
+                         "starting from 0"
+                      << std::endl;
+            std::cin >> book_to_return;
+          }
+          systema.ReturnBook(*borrowed_books[book_to_return], user);
+        }
+        break;
+      }
+      case 5: {
+        system("clear");
+        std::vector<Book*> available_books;
+        for (const auto& element : Search(systema)) {
+          if (element->GetBookState() == available) {
+            available_books.emplace_back(element);
+          }
+        }
+        /// Print occurrences
+        if (available_books.size() == 0) {
+          std::cout << "\nBook not found\n";
+        } else {
+          if (available_books.size() == 1) {
+            std::cout << "\nBook found\n";
+            std::cout << *available_books[0] << std::endl;
+          } else {
+            std::cout << "\nBooks found\n";
+            for (int i = 0; i < available_books.size(); i++) {
+              std::cout << "Book number: " << i + 1 << *available_books[i]
+                        << std::endl;
+            }
+          }
+          int book_to_reserve{-1};
+          while (0 > book_to_reserve ||
+                 book_to_reserve >= available_books.size()) {
+            std::cout << "Enter the number of the book you to reserve, "
+                         "starting from 0"
+                      << std::endl;
+            std::cin >> book_to_reserve;
+          }
+          systema.ReserveBook(*available_books[book_to_reserve], user);
+        }
+        break;
+      }
+      case 6: {
+        system("clear");
+        std::vector<Book*> reserved_books;
+        for (const auto& element : Search(systema)) {
+          if (element->GetBookState() == reserved) {
+            reserved_books.emplace_back(element);
+          }
+        }
+        /// Print occurrences
+        if (reserved_books.size() == 0) {
+          std::cout << "\nBook not found\n";
+        } else {
+          if (reserved_books.size() == 1) {
+            std::cout << "\nBook found\n";
+            std::cout << *reserved_books[0] << std::endl;
+          } else {
+            std::cout << "\nBooks found\n";
+            for (int i = 0; i < reserved_books.size(); i++) {
+              std::cout << "Book number: " << i + 1 << *reserved_books[i]
+                        << std::endl;
+            }
+          }
+          int book_to_cancel_reservation{-1};
+          while (0 > book_to_cancel_reservation ||
+                 book_to_cancel_reservation >= reserved_books.size()) {
+            std::cout << "Enter the number of the book you want to cancel the "
+                         "reserve of, starting from 0"
+                      << std::endl;
+            std::cin >> book_to_cancel_reservation;
+          }
+          systema.CancelReservation(*reserved_books[book_to_cancel_reservation],
+                                    user);
+        }
+        break;
+      }
       }
     }
   }
@@ -258,6 +376,10 @@ void ProcessBookFileInput(const std::string& file_name, System& system) {
     }
     // Extract the letter
     letter = line[0];
+    if (letter == 'R' || letter == 'B') {
+      line = line.substr(2);
+    }
+    User owner_of_book{};
     BookState state;
     switch (letter) {
     case 'L':
@@ -266,17 +388,37 @@ void ProcessBookFileInput(const std::string& file_name, System& system) {
     case 'D':
       state = BookState::damaged;
       break;
-    case 'B':
+    case 'B': {
       state = BookState::borrowed;
+      // Process the line: Name Identifier Password
+      std::string name;
+      std::string identifier;
+      // Extract the name, identifier and password
+      std::stringstream user_data{line};
+      user_data >> name >> identifier;
+      owner_of_book = User(name, std::stoi(identifier), std::string());
       break;
-    case 'R':
+    }
+    case 'R': {
       state = BookState::reserved;
+      // Process the line: Name Identifier Password
+      std::string name;
+      std::string identifier;
+      std::string password;
+      // Extract the name, identifier and password
+      std::stringstream user_data{line};
+      user_data >> name >> identifier;
+      owner_of_book = User(name, std::stoi(identifier), std::string());
       break;
+    }
     case 'A':
       state = BookState::available;
       break;
     }
     Book book(name, identifier, author, state);
+    if (letter == 'R' || letter == 'B') {
+      book.SetOwner(owner_of_book);
+    }
     system.AddBook(book);
   }
   file.close();
@@ -317,7 +459,7 @@ void WriteUsersData(const std::string& filename, const System& system) {
     return;
   }
   for (const auto& user : system.GetUsers()) {
-    output << user << "\n";
+    output << user << " " << user.GetPassword() << "\n";
   }
 }
 void WriteBooksData(const std::string& filename, const System& system) {
