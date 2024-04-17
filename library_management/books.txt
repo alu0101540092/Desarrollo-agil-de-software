@@ -1,10 +1,10 @@
-Don Quijote de la Mancha,1,Cervantes,B
-Moby Dick,2,Melville,A
-Orgullo y Prejuicio,3,Austen,R
-1984,4,Orwell,D
-La Divina Comedia,5,Dante,L
-El Principito,6,Saint-Exupery,B
-Crimen y Castigo,7,Dostoyevski,A
-En busca del tiempo perdido,8,Proust,R
-La Odisea,9,Homero,D
-Hamlet,10,Shakespeare,L
+don quijote de la mancha,1,cervantes,B
+moby dick,2,melville,A
+orgullo y prejuicio,3,austen,R
+1984,4,orwell,D
+la divina comedia,5,dante,L
+el principito,6,saint-exupery,B
+crimen y castigo,7,dostoyevski,A
+en busca del tiempo perdido,8,proust,R
+la odisea,9,homero,B
+hamlet,10,shakespeare,L

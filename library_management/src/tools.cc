@@ -24,7 +24,7 @@ void Password(System& system, User& user) {
   /// Check if the user exist
   if (system.ExistentUser(username)) {
     /// Security check
-    std::cout << "\nPassword: ";
+    std::cout << "\nOld password: ";
     std::cin >> password;
     if (system.VerifyPassword(username, password)) {
       /// Getting the new password
@@ -45,23 +45,25 @@ void Password(System& system, User& user) {
 /**
  * @brief Search for a book
  * @param system reference to the system
+ * @return vector of pointers pointing to books found
  */
-void Search(System& system) {
+std::vector<Book*> Search(System& system) {
   std::string name;
   std::cout << "\n###### Search ######\n\n";
-  std::cout << "\nWhat are you looking for?: ";
+  std::cout << "\nWhat are you looking for?: " << std::endl;
   std::cin >> name;
   std::transform(
       name.begin(), name.end(), name.begin(),
       [](unsigned char c) -> unsigned char { return std::tolower(c); });
-  system.ExistentReference(name);
+  return system.ExistentReference(name);
 }
 
 /**
  * @brief Register a new user
  * @param system reference to the system
+ * @return reference to user registered or nullopt if no user was found
  */
-void SignIn(System& system) {
+User* SignIn(System& system) {
   std::string username;
   std::string password;
   std::cout << "\n###### Sign in ######\n\n";
@@ -78,62 +80,74 @@ void SignIn(System& system) {
       }
     } while (!system.VerifyPassword(username, password));
     system.AddAuthenticatedUser(system.GetUser(username));
-    return;
+    return &system.GetUser(username);
   } else if (system.ExistentUser(username) &&
              system.GetAuthenticatedUser(username)) {
     std::cout << "\nWelcome " << username << "!\n";
+    return &system.GetUser(username);
   } else {
     std::cout << "\nUser not found\n";
+    return nullptr;
   }
 }
 
 /**
- * @brief Unauthenticated user menu
+ * @brief Initial system menu
+ * @param systema reference to system object
  */
-void CurrentUserMenu(System& systema) {
+void UserMenu(System& systema) {
   system("clear");
   int option;
-  bool verify_option = true;
-  while (verify_option) {
-    std::cout << "\n###### Library Management ######\n";
-    std::cout << "\nChoose one of the following options:\n";
-    std::cout << "[0] Exit\n";
-    std::cout << "[1] Register\n";
-    std::cout << "[2] Sign in\n";
-    std::cout << "\nOption: ";
-    std::cin >> option;
-    if (option < 0 || option > 3) {
-      std::cout << "\nInvalid option\n";
-    } else {
-      switch (option) {
-      case 0:
-        verify_option = false;
-        break;
-      case 1:
-        system("clear");
-        systema.AddUser(NewUser());
-        break;
-      case 2:
-        system("clear");
-        SignIn(systema);
-        break;
+  bool not_authenticated = true;
+  User* sign_in_result{};
+  bool continue_loop{true};
+  while (continue_loop) {
+    while (not_authenticated) {
+      std::cout << "\n###### Library Management ######\n";
+      std::cout << "\nChoose one of the following options:\n";
+      std::cout << "[0] Exit\n";
+      std::cout << "[1] Register\n";
+      std::cout << "[2] Sign in\n";
+      std::cout << "\nOption: ";
+      std::cin >> option;
+      if (option < 0 || option > 3) {
+        std::cout << "\nInvalid option\n";
+      } else {
+        switch (option) {
+        case 0:
+          return;
+        case 1:
+          system("clear");
+          systema.AddUser(NewUser());
+          break;
+        case 2:
+          system("clear");
+          sign_in_result = SignIn(systema);
+          if (sign_in_result != nullptr) {
+            not_authenticated = false;
+          }
+          break;
+        }
       }
     }
+    continue_loop = PostUserMenu(systema, *sign_in_result);
   }
 }
 
 /**
  * @brief Authenticated user menu
+ * @return true if user wants to continue, false if he wants to exit
  */
-void PostUserMenu(System& systema, User& user) {
+bool PostUserMenu(System& systema, User& user) {
   int option;
-  bool verify_option = true;
-  while (verify_option) {
+  bool continue_flag = true;
+  while (continue_flag) {
     std::cout << "\n###### Library Management ######\n";
     std::cout << "\nChoose one of the following options:\n";
     std::cout << "[0] Exit Sesion\n";
-    std::cout << "[1] Search\n";
+    std::cout << "[1] Search for a book\n";
     std::cout << "[2] Change password\n";
+    std::cout << "[3] Borrow book\n";
     std::cout << "\nOption: ";
     std::cin >> option;
     if (option < 0 || option > 3) {
@@ -141,19 +155,57 @@ void PostUserMenu(System& systema, User& user) {
     } else {
       switch (option) {
       case 0:
-        verify_option = false;
-        break;
-      case 1:
+        return false;
+      case 1: {
         system("clear");
-        Search(systema);
+        std::vector<Book*> results{Search(systema)};
+        /// Print occurrences
+        if (results.size() == 0) {
+          std::cout << "\nBook not found\n";
+        } else {
+          if (results.size() == 1) {
+            std::cout << "\nBook found\n";
+            std::cout << *results[0] << std::endl;
+          } else {
+            std::cout << "\nBooks found\n";
+            for (int i = 0; i < results.size(); i++) {
+              std::cout << "Book number: " << i + 1 << *results[i] << std::endl;
+            }
+          }
+        }
         break;
+      }
       case 2:
         system("clear");
         Password(systema, user);
         break;
+      case 3:
+        system("clear");
+        std::vector<Book*> results{Search(systema)};
+        /// Print occurrences
+        if (results.size() == 0) {
+          std::cout << "\nBook not found\n";
+        } else {
+          if (results.size() == 1) {
+            std::cout << "\nBook found\n";
+            std::cout << *results[0] << std::endl;
+          } else {
+            std::cout << "\nBooks found\n";
+            for (int i = 0; i < results.size(); i++) {
+              std::cout << "Book number: " << i + 1 << *results[i] << std::endl;
+            }
+          }
+        }
+        int book_to_borrow{-1};
+        while (0 > book_to_borrow || book_to_borrow >= results.size()) {
+          std::cin >> book_to_borrow;
+        }
+        systema.BorrowBook(*results[book_to_borrow]);
+        break;
       }
     }
   }
+  return true;
 }
 
 /**
@@ -206,29 +258,26 @@ void ProcessBookFileInput(const std::string& file_name, System& system) {
     }
     // Extract the letter
     letter = line[0];
-    Book book(name, identifier, author);
+    BookState state;
     switch (letter) {
     case 'L':
-      system.AddBook(book);
-      system.AddLostBook(book);
+      state = BookState::lost;
       break;
     case 'D':
-      system.AddBook(book);
-      system.AddDamagedBook(book);
+      state = BookState::damaged;
       break;
     case 'B':
-      system.AddBook(book);
-      system.AddBorrowedBook(book);
+      state = BookState::borrowed;
       break;
     case 'R':
-      system.AddBook(book);
-      system.AddReservedBook(book);
+      state = BookState::reserved;
       break;
     case 'A':
-      system.AddBook(book);
-      system.AddAvailableBook(book);
+      state = BookState::available;
       break;
     }
+    Book book(name, identifier, author, state);
+    system.AddBook(book);
   }
   file.close();
 }
@@ -246,38 +295,40 @@ void ProcessUserFileInput(const std::string& file_name, System& system) {
   while (std::getline(file, line)) {
     // Process the line: Name Identifier Password
     std::string name;
-    int identifier;
+    std::string identifier;
     std::string password;
-    // Extract the name
-    for (int i = 0; i < line.size(); i++) {
-      if (line[i] == ',') {
-        name = line.substr(0, i);
-        std::transform(
-            name.begin(), name.end(), name.begin(),
-            [](unsigned char c) -> unsigned char { return std::tolower(c); });
-        line = line.substr(i + 1);
-        break;
-      }
-    }
-    // Extract the identifier
-    for (int i = 0; i < line.size(); i++) {
-      if (line[i] == ',') {
-        identifier = std::stoi(line.substr(0, i));
-        line = line.substr(i + 1);
-        break;
-      }
-    }
-    // Extract the password
-    for (int i = 0; i < line.size(); i++) {
-      if (std::isblank(line[i]) || line[i] == '\n' || line[i] == '\r') {
-        password = line.substr(0, i);
-        break;
-      }
-    }
-    User user_to_add{name, identifier, password};
+    // Extract the name, identifier and password
+    std::stringstream user_data{line};
+    user_data >> name >> identifier >> password;
+    User user_to_add{name, std::stoi(identifier), password};
     system.AddUser(user_to_add);
   }
   file.close();
+}
+/**
+ * @brief Saves all the users data into a file
+ * @param file_name name of the file to save the data
+ * @param system reference to system object
+ */
+void WriteUsersData(const std::string& filename, const System& system) {
+  std::ofstream output(filename);
+  if (!output) {
+    std::cerr << "Unable to open file: " << filename << "\n";
+    return;
+  }
+  for (const auto& user : system.GetUsers()) {
+    output << user << "\n";
+  }
+}
+void WriteBooksData(const std::string& filename, const System& system) {
+  std::ofstream output(filename);
+  if (!output) {
+    std::cerr << "Unable to open file: " << filename << "\n";
+    return;
+  }
+  for (const auto& book : system.GetBooks()) {
+    output << book << "\n";
+  }
 }
 /**
  * @brief Create a New User
@@ -300,7 +351,8 @@ User NewUser() {
     std::cin >> password;
     if (password.length() < 4) {
       wrong_answer = true;
-      std::cout << "Password must have at least 4 characters. Try again:";
+      std::cout << "Password must have at least 4 characters. Try again:"
+                << std::endl;
     } else {
       wrong_answer = false;
     }

@@ -16,11 +16,11 @@
 
 // CONSTRUCTORS
 Book::Book(const std::string& name, const int& identifier,
-           const std::string& author)
+           const std::string& author, const BookState& book_state)
     : name_(name),
       identifier_(identifier),
       author_(author),
-      book_state_(available) {}
+      book_state_(book_state) {}
 
 // MEMBER FUNCTIONS
 /**
@@ -62,6 +62,26 @@ std::string Book::GetAuthor() const { return author_; }
  */
 std::ostream& operator<<(std::ostream& output, const Book& book) {
   output << book.GetName() << "," << book.GetIdentifier() << ","
-         << book.GetAuthor();
+         << book.GetAuthor() << ",";
+  switch (book.GetBookState()) {
+  case lost:
+    output << "L";
+    break;
+  case damaged:
+    output << "D";
+    break;
+  case borrowed:
+    output << "B";
+    break;
+  case reserved:
+    output << "R";
+    break;
+  case available:
+    output << "A";
+    break;
+  default:
+    std::cerr << "This should never happen" << std::endl;
+    break;
+  }
   return output;
 }

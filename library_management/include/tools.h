@@ -10,25 +10,29 @@
  * @brief Function declaration tools
  * @bug
  * @see
-*/
+ */
 
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <cctype>
 #include <algorithm>
-#include "system.h"
+#include <cctype>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+
 #include "book.h"
+#include "system.h"
 #include "user.h"
 
 #pragma once
 
-void CurrentUserMenu(System& system);
+void UserMenu(System& system);
+bool PostUserMenu(System& systema, User& user);
 void ProcessBookFileInput(const std::string& file_name, System& system);
 void ProcessUserFileInput(const std::string& file_name, System& system);
+void WriteUsersData(const std::string& file_name, const System& system);
+void WriteBooksData(const std::string& file_name, const System& system);
 User NewUser();
 bool UsernameExist(const std::string& username);
-void SignIn(System& system);
-void Search(System& system);
+User* SignIn(System& system);
+std::vector<Book*> Search(System& system);
 void Password(System& system, const User& user);

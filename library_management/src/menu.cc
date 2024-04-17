@@ -5,16 +5,16 @@
  * Fundamentos de Ingeniería del Sofware 2023-2024
  * Práctica 6 : Desarrollo ágil de software
  *
- * @author 
+ * @author
  * @date 15/04/2024
  * @brief User menu
  * @bug
  * @see
-*/
+ */
 #include "../include/book.h"
-#include "../include/user.h"
-#include "../include/tools.h"
 #include "../include/system.h"
+#include "../include/tools.h"
+#include "../include/user.h"
 
 // ToDo : enum BookState
 // ToDo : main -> constructor system. Procesar ficheros
@@ -26,6 +26,10 @@ int main(int argc, char* argv[]) {
   System system;
   ProcessUserFileInput(KUsersDataFilename, system);
   ProcessBookFileInput(KBooksDataFilename, system);
-  CurrentUserMenu(system);
+
+  UserMenu(system);
+  
+  WriteBooksData(KBooksDataFilename, system);
+  WriteUsersData(KUsersDataFilename, system);
   return 0;
 }

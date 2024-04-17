@@ -73,7 +73,7 @@ std::string User::GetPassword() const { return password_; }
  * @return print of the user and reference to the output stream
  */
 std::ostream& operator<<(std::ostream& output, const User& user) {
-  output << user.GetName() << "," << user.GetIdentifier() << ","
+  output << user.GetName() << " " << user.GetIdentifier() << " "
          << user.GetPassword();
   return output;
 }

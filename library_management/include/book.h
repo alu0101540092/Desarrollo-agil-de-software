@@ -29,16 +29,15 @@ class Book {
 public:
   /// CONSTRUCTORS
   Book(const std::string& name, const int& identifier,
-       const std::string& author);
-
+       const std::string& author, const BookState& book_state);
   /// MEMBER FUNCTIONS
   BookState GetBookState() const;
-  void SetBookState(const BookState& value);
 
   /// GETTERS & SETTERS
   std::string GetName() const;
   int GetIdentifier() const;
   std::string GetAuthor() const;
+  void SetBookState(const BookState& state);
 
 private:
   std::string name_;

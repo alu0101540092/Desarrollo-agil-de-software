@@ -18,11 +18,6 @@
 std::vector<Book> System::books_;
 std::vector<User> System::users_;
 std::vector<User> System::authenticated_users_;
-std::vector<Book> System::borrowed_books_;
-std::vector<Book> System::available_books_;
-std::vector<Book> System::reserved_books_;
-std::vector<Book> System::lost_books_;
-std::vector<Book> System::damaged_books_;
 
 /**
  * @brief Constructor of the class System
@@ -41,11 +36,6 @@ System::System(std::vector<Book> books, std::vector<User> users,
                std::vector<Book> damaged_books) {
   books_ = books;
   users_ = users;
-  borrowed_books_ = borrowed_books;
-  available_books_ = available_books;
-  reserved_books_ = reserved_books;
-  lost_books_ = lost_books;
-  damaged_books_ = damaged_books;
 }
 
 /**
@@ -69,49 +59,6 @@ void System::AddUser(const User& user) { users_.push_back(user); }
  */
 void System::AddAuthenticatedUser(const User& user) {
   authenticated_users_.push_back(user);
-}
-
-/**
- * @brief Function to add a borrowed book to the system
- *
- * @param book
- */
-void System::AddBorrowedBook(const Book& book) {
-  borrowed_books_.push_back(book);
-}
-
-/**
- * @brief Function to add an available book to the system
- *
- * @param book
- */
-void System::AddAvailableBook(const Book& book) {
-  available_books_.push_back(book);
-}
-
-/**
- * @brief Function to add a reserved book to the system
- *
- * @param book
- */
-void System::AddReservedBook(const Book& book) {
-  reserved_books_.push_back(book);
-}
-
-/**
- * @brief Function to add a lost book to the system
- *
- * @param book
- */
-void System::AddLostBook(const Book& book) { lost_books_.push_back(book); }
-
-/**
- * @brief Function to add a damaged book to the system
- *
- * @param book
- */
-void System::AddDamagedBook(const Book& book) {
-  damaged_books_.push_back(book);
 }
 
 /**
@@ -152,93 +99,27 @@ void System::RemoveAuthenticatedUser(const User& user) {
     }
   }
 }
-
-/**
- * @brief Function to remove a borrowed book from the system
- *
- * @param book
- */
-void System::RemoveBorrowedBook(const Book& book) {
-  for (int i = 0; i < borrowed_books_.size(); i++) {
-    if (borrowed_books_[i].GetName() == book.GetName()) {
-      borrowed_books_.erase(borrowed_books_.begin() + i);
-    }
-  }
-}
-
-/**
- * @brief Function to remove an available book from the system
- *
- * @param book
- */
-void System::RemoveAvailableBook(const Book& book) {
-  for (int i = 0; i < available_books_.size(); i++) {
-    if (available_books_[i].GetName() == book.GetName()) {
-      available_books_.erase(available_books_.begin() + i);
-    }
-  }
-}
-
-/**
- * @brief Function to remove a reserved book from the system
- *
- * @param book
- */
-void System::RemoveReservedBook(const Book& book) {
-  for (int i = 0; i < reserved_books_.size(); i++) {
-    if (reserved_books_[i].GetName() == book.GetName()) {
-      reserved_books_.erase(reserved_books_.begin() + i);
-    }
-  }
-}
-
-/**
- * @brief Function to remove a lost book from the system
- *
- * @param book
- */
-void System::RemoveLostBook(const Book& book) {
-  for (int i = 0; i < lost_books_.size(); i++) {
-    if (lost_books_[i].GetName() == book.GetName()) {
-      lost_books_.erase(lost_books_.begin() + i);
-    }
-  }
-}
-
-/**
- * @brief Function to remove a damaged book from the system
- *
- * @param book
- */
-void System::RemoveDamagedBook(const Book& book) {
-  for (int i = 0; i < damaged_books_.size(); i++) {
-    if (damaged_books_[i].GetName() == book.GetName()) {
-      damaged_books_.erase(damaged_books_.begin() + i);
-    }
-  }
-}
-
 /**
  * @brief Function to get the books of the system
  *
  * @return std::vector<Book>
  */
-std::vector<Book> System::GetBooks() { return books_; }
+std::vector<Book> System::GetBooks() const { return books_; }
 
 /**
  * @brief Function to get the users of the system
  *
  * @return std::vector<User>
  */
-std::vector<User> System::GetUsers() { return users_; }
+std::vector<User> System::GetUsers() const { return users_; }
 
 /**
  * @brief Function to get a user of the system
  *
  * @param user
- * @return bool
+ * @return reference of user
  */
-User System::GetUser(const std::string& user) {
+User& System::GetUser(const std::string& user) const {
   for (int i = 0; i < users_.size(); i++) {
     if (users_[i].GetName() == user) {
       return users_[i];
@@ -252,7 +133,7 @@ User System::GetUser(const std::string& user) {
  * @param user
  * @return bool
  */
-bool System::GetAuthenticatedUser(const std::string& user) {
+bool System::GetAuthenticatedUser(const std::string& user) const {
   for (int i = 0; i < authenticated_users_.size(); i++) {
     if (authenticated_users_[i].GetName() == user) {
       return true;
@@ -266,73 +147,23 @@ bool System::GetAuthenticatedUser(const std::string& user) {
  *
  * @return std::vector<User>
  */
-std::vector<User> System::GetAuthenticatedUsers() {
+std::vector<User> System::GetAuthenticatedUsers() const {
   return authenticated_users_;
 }
-
-/**
- * @brief Function to get the borrowed books of the system
- *
- * @return std::vector<Book>
- */
-std::vector<Book> System::GetBorrowedBooks() { return borrowed_books_; }
-
-/**
- * @brief Function to get the available books of the system
- *
- * @return std::vector<Book>
- */
-std::vector<Book> System::GetAvailableBooks() { return available_books_; }
-
-/**
- * @brief Function to get the reserved books of the system
- *
- * @return std::vector<Book>
- */
-std::vector<Book> System::GetReservedBooks() { return reserved_books_; }
-
-/**
- * @brief Function to get the lost books of the system
- *
- * @return std::vector<Book>
- */
-std::vector<Book> System::GetLostBooks() { return lost_books_; }
-
-/**
- * @brief Function to get the damaged books of the system
- *
- * @return std::vector<Book>
- */
-std::vector<Book> System::GetDamagedBooks() { return damaged_books_; }
-
 /**
  * @brief Function to borrow a book
  *
  * @param book
  * @param user
  */
-void System::BorrowBook(const Book& book, const User& user) {
-  borrowed_books_.push_back(book);
-  for (int i = 0; i < available_books_.size(); i++) {
-    if (available_books_[i].GetName() == book.GetName()) {
-      available_books_.erase(available_books_.begin() + i);
-    }
-  }
-}
+void System::BorrowBook(Book& book) { book.SetBookState(BookState::borrowed); }
 
 /**
  * @brief Function to return a book
  *
  * @param book
  */
-void System::ReturnBook(const Book& book) {
-  available_books_.push_back(book);
-  for (int i = 0; i < borrowed_books_.size(); i++) {
-    if (borrowed_books_[i].GetName() == book.GetName()) {
-      borrowed_books_.erase(borrowed_books_.begin() + i);
-    }
-  }
-}
+void System::ReturnBook(Book& book) { book.SetBookState(BookState::available); }
 
 /**
  * @brief Function to reserve a book
@@ -340,27 +171,15 @@ void System::ReturnBook(const Book& book) {
  * @param book
  * @param user
  */
-void System::ReserveBook(const Book& book, const User& user) {
-  reserved_books_.push_back(book);
-  for (int i = 0; i < available_books_.size(); i++) {
-    if (available_books_[i].GetName() == book.GetName()) {
-      available_books_.erase(available_books_.begin() + i);
-    }
-  }
-}
+void System::ReserveBook(Book& book) { book.SetBookState(BookState::reserved); }
 
 /**
  * @brief Function to cancel a reservation
  *
  * @param book
  */
-void System::CancelReservation(const Book& book) {
-  available_books_.push_back(book);
-  for (int i = 0; i < reserved_books_.size(); i++) {
-    if (reserved_books_[i].GetName() == book.GetName()) {
-      reserved_books_.erase(reserved_books_.begin() + i);
-    }
-  }
+void System::CancelReservation(Book& book) {
+  book.SetBookState(BookState::available);
 }
 
 /**
@@ -368,27 +187,15 @@ void System::CancelReservation(const Book& book) {
  *
  * @param book
  */
-void System::ReportLostBook(const Book& book) {
-  lost_books_.push_back(book);
-  for (int i = 0; i < borrowed_books_.size(); i++) {
-    if (borrowed_books_[i].GetName() == book.GetName()) {
-      borrowed_books_.erase(borrowed_books_.begin() + i);
-    }
-  }
-}
+void System::ReportLostBook(Book& book) { book.SetBookState(BookState::lost); }
 
 /**
  * @brief Function to report a damaged book
  *
  * @param book
  */
-void System::ReportDamagedBook(const Book& book) {
-  damaged_books_.push_back(book);
-  for (int i = 0; i < borrowed_books_.size(); i++) {
-    if (borrowed_books_[i].GetName() == book.GetName()) {
-      borrowed_books_.erase(borrowed_books_.begin() + i);
-    }
-  }
+void System::ReportDamagedBook(Book& book) {
+  book.SetBookState(BookState::damaged);
 }
 
 /**
@@ -427,17 +234,15 @@ bool System::VerifyPassword(const std::string& user,
  * @brief Function to check if a book exists in the system
  *
  * @param book
- * @return true
- * @return false
+ * @return vector of pointers to book objects found
  */
-void System::ExistentReference(const std::string& book) {
+std::vector<Book*> System::ExistentReference(const std::string& book) {
+  std::vector<Book*> books;
   if (book == "") {
-    return;
+    return books;
   }
-
   std::istringstream iss(book);
   std::string word;
-  std::vector<Book> books;
 
   while (iss >> word) {
     /// Search by name
@@ -446,7 +251,7 @@ void System::ExistentReference(const std::string& book) {
       std::string word1;
       while (iss1 >> word1) {
         if (word == word1) {
-          books.push_back(books_[i]);
+          books.push_back(&books_[i]);
         }
       }
     }
@@ -456,26 +261,12 @@ void System::ExistentReference(const std::string& book) {
       std::string word2;
       while (iss2 >> word2) {
         if (word == word2) {
-          books.push_back(books_[i]);
+          books.push_back(&books_[i]);
         }
       }
     }
   }
-
-  /// Print occurrences
-  if (books.size() == 0) {
-    std::cout << "\nBook not found\n";
-  } else {
-    if (books.size() == 1) {
-      std::cout << "\nBook found\n";
-      std::cout << books[0] << std::endl;
-    } else {
-      std::cout << "\nBooks found\n";
-      for (int i = 0; i < books.size(); i++) {
-        std::cout << "Book number: " << i + 1 << books[i] << std::endl;
-      }
-    }
-  }
+  return books;
 }
 
 /**
@@ -513,9 +304,10 @@ void System::PrintUsers() {
  *
  */
 void System::PrintBorrowedBooks() {
-  for (int i = 0; i < borrowed_books_.size(); i++) {
-    std::cout << "Borrowed book nº: " << i + 1 << borrowed_books_[i]
-              << std::endl;
+  for (int i = 0; i < books_.size(); i++) {
+    if (books_[i].GetBookState() == BookState::borrowed) {
+      std::cout << "Borrowed book nº: " << i + 1 << books_[i] << std::endl;
+    }
   }
 }
 
@@ -524,9 +316,10 @@ void System::PrintBorrowedBooks() {
  *
  */
 void System::PrintAvailableBooks() {
-  for (int i = 0; i < available_books_.size(); i++) {
-    std::cout << "Available book nº: " << i + 1 << available_books_[i]
-              << std::endl;
+  for (int i = 0; i < books_.size(); i++) {
+    if (books_[i].GetBookState() == BookState::available) {
+      std::cout << "Available book nº: " << i + 1 << books_[i] << std::endl;
+    }
   }
 }
 
@@ -535,9 +328,10 @@ void System::PrintAvailableBooks() {
  *
  */
 void System::PrintReservedBooks() {
-  for (int i = 0; i < reserved_books_.size(); i++) {
-    std::cout << "Reserved book nº: " << i + 1 << reserved_books_[i]
-              << std::endl;
+  for (int i = 0; i < books_.size(); i++) {
+    if (books_[i].GetBookState() == BookState::reserved) {
+      std::cout << "Reserved book nº: " << i + 1 << books_[i] << std::endl;
+    }
   }
 }
 
@@ -546,8 +340,10 @@ void System::PrintReservedBooks() {
  *
  */
 void System::PrintLostBooks() {
-  for (int i = 0; i < lost_books_.size(); i++) {
-    std::cout << "Lost book nº: " << i + 1 << lost_books_[i] << std::endl;
+  for (int i = 0; i < books_.size(); i++) {
+    if (books_[i].GetBookState() == BookState::lost) {
+      std::cout << "Lost book nº: " << i + 1 << books_[i] << std::endl;
+    }
   }
 }
 
@@ -556,7 +352,9 @@ void System::PrintLostBooks() {
  *
  */
 void System::PrintDamagedBooks() {
-  for (int i = 0; i < damaged_books_.size(); i++) {
-    std::cout << "Damaged book nº: " << i + 1 << damaged_books_[i] << std::endl;
+  for (int i = 0; i < books_.size(); i++) {
+    if (books_[i].GetBookState() == BookState::damaged) {
+      std::cout << "Damaged book nº: " << i + 1 << books_[i] << std::endl;
+    }
   }
 }
