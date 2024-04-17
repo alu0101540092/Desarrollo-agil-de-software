@@ -27,6 +27,7 @@
 void CurrentUserMenu(System& system);
 void ProcessFileInput(const std::string& file_name, System& system);
 User NewUser();
+bool UsernameExist(const std::string& username);
 void SignIn(System& system);
 void Search(System& system);
 void Password(System& system, const User& user);

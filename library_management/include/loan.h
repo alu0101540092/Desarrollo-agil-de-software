@@ -14,8 +14,8 @@
 
 #include <chrono>
 #include <iostream>
-#include "book.h"
 
+#include "book.h"
 #pragma once
 
 /**
@@ -35,7 +35,7 @@ class Loan {
   const Book& GetBookBorrowed() const;
 
  private:
-  const Book& book_borrowed_;
+  Book book_borrowed_;
   std::chrono::system_clock::time_point loan_time_;
   bool returned_;
 };

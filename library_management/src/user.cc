@@ -40,6 +40,7 @@ bool User::IsAuthenticated() const {
  */
 bool User::Login(const std::string& password) {
   is_authenticated_ = (password == password_);
+  return (password == password_);
 }
 
 /**
