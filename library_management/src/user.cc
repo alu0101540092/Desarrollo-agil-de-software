@@ -10,7 +10,7 @@
  * @brief Definitons of the User class
  * @bug
  * @see
-*/
+ */
 
 #include "../include/user.h"
 
@@ -21,17 +21,17 @@
  * @param password password of the user
  */
 User::User(const std::string& name, const int identifier,
-           const std::string& password) : 
-           name_(name), password_(password),
-           identifier_(identifier), is_authenticated_(false) {}
+           const std::string& password)
+    : name_(name),
+      password_(password),
+      identifier_(identifier),
+      is_authenticated_(false) {}
 
 /**
  * @brief Function to check if the user is authenticated
  * @return true if the user is authenticated, false otherwise
  */
-bool User::IsAuthenticated() const {
-  return is_authenticated_;
-}
+bool User::IsAuthenticated() const { return is_authenticated_; }
 
 /**
  * @brief Function to check if the password is correct
@@ -47,26 +47,24 @@ bool User::Login(const std::string& password) {
  * @brief Function to change the password of the user
  * @param password new password
  */
-void User::SetPassword(const std::string& password) {
-  password_ = password;
-}
+void User::SetPassword(const std::string& password) { password_ = password; }
 
 /**
  * @brief Function to get the name of the user
  * @return name of the user
  */
-std::string User::GetName() const {
-  return name_;
-}
+std::string User::GetName() const { return name_; }
 
 /**
  * @brief Function to get the identifier of the user
  * @return identifier of the user
  */
-int User::GetIdentifier() const {
-  return identifier_;
-}
-
+int User::GetIdentifier() const { return identifier_; }
+/**
+ * @brief Function to get the identifier of the user
+ * @return password of the user
+ */
+std::string User::GetPassword() const { return password_; }
 /**
  * @brief Overload of the operator << to allow the printing of
  * objets of the class User
@@ -75,6 +73,7 @@ int User::GetIdentifier() const {
  * @return print of the user and reference to the output stream
  */
 std::ostream& operator<<(std::ostream& output, const User& user) {
-  output << user.GetName() << " with identifier " << user.GetIdentifier();
+  output << user.GetName() << "," << user.GetIdentifier() << ","
+         << user.GetPassword();
   return output;
 }

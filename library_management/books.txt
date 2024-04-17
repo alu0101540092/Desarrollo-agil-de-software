@@ -3,7 +3,7 @@ Moby Dick,2,Melville,A
 Orgullo y Prejuicio,3,Austen,R
 1984,4,Orwell,D
 La Divina Comedia,5,Dante,L
-El Principito 6,Saint-Exupery,B
+El Principito,6,Saint-Exupery,B
 Crimen y Castigo,7,Dostoyevski,A
 En busca del tiempo perdido,8,Proust,R
 La Odisea,9,Homero,D

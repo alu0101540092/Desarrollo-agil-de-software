@@ -25,7 +25,8 @@
 #pragma once
 
 void CurrentUserMenu(System& system);
-void ProcessFileInput(const std::string& file_name, System& system);
+void ProcessBookFileInput(const std::string& file_name, System& system);
+void ProcessUserFileInput(const std::string& file_name, System& system);
 User NewUser();
 bool UsernameExist(const std::string& username);
 void SignIn(System& system);

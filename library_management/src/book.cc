@@ -61,6 +61,7 @@ std::string Book::GetAuthor() const { return author_; }
  * @return print of the book and reference to the output stream
  */
 std::ostream& operator<<(std::ostream& output, const Book& book) {
-  output << book.GetName() << " with identifier " << book.GetIdentifier();
+  output << book.GetName() << "," << book.GetIdentifier() << ","
+         << book.GetAuthor();
   return output;
 }

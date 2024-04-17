@@ -30,11 +30,11 @@ public:
   /// MEMBER FUNCTIONS
   bool IsAuthenticated() const;
   bool Login(const std::string& password);
-  // bool BorrowBook(const Catalog& catalog, const std::string& book_name);
-  // bool ReturnBook(const Catalog& catalog, const std::string& book_name);
+
   /// GETTERS & SETTERS
   std::string GetName() const;
   int GetIdentifier() const;
+  std::string GetPassword() const;
   void SetPassword(const std::string& password);
 
 private:

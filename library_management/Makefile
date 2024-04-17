@@ -1,4 +1,4 @@
-CXX := g++ 
+CXX := g++ -g
 SRC_DIR := src
 BUILD_DIR := build
 
