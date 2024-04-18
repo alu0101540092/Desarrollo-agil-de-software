@@ -63,28 +63,30 @@ std::vector<Book*> Search(System& system) {
  * @param system reference to the system
  * @return reference to user registered or nullopt if no user was found
  */
-User* SignIn(System& system) {
+User* SignIn(System& systema) {
   std::string username;
   std::string password;
   std::cout << "\n###### Sign in ######\n\n";
   std::cout << "\nUsername: ";
   std::cin >> username;
-  if (system.ExistentUser(username) && !system.GetAuthenticatedUser(username)) {
+  if (systema.ExistentUser(username) && !systema.GetAuthenticatedUser(username)) {
     do {
       std::cout << "\nPassword: ";
       std::cin >> password;
-      if (system.VerifyPassword(username, password)) {
-        std::cout << "\nWelcome! " << username << "!\n";
+      if (systema.VerifyPassword(username, password)) {
+        system("clear");
+        std::cout << "\nWelcome " << username << "!\n";
       } else {
         std::cout << "\nPassword is incorrect\n";
       }
-    } while (!system.VerifyPassword(username, password));
-    system.AddAuthenticatedUser(system.GetUser(username));
-    return &system.GetUser(username);
-  } else if (system.ExistentUser(username) &&
-             system.GetAuthenticatedUser(username)) {
+    } while (!systema.VerifyPassword(username, password));
+    systema.AddAuthenticatedUser(systema.GetUser(username));
+    return &systema.GetUser(username);
+  } else if (systema.ExistentUser(username) &&
+             systema.GetAuthenticatedUser(username)) {
+    system("clear");
     std::cout << "\nWelcome " << username << "!\n";
-    return &system.GetUser(username);
+    return &systema.GetUser(username);
   } else {
     std::cout << "\nUser not found\n";
     return nullptr;
@@ -462,6 +464,12 @@ void WriteUsersData(const std::string& filename, const System& system) {
     output << user << " " << user.GetPassword() << "\n";
   }
 }
+
+/**
+ * @brief Saves all the books data into a file
+ * @param file_name name of the file to save the data
+ * @param system reference to system object
+ */
 void WriteBooksData(const std::string& filename, const System& system) {
   std::ofstream output(filename);
   if (!output) {
