@@ -16,16 +16,15 @@
 
 /**
  * @brief Default constructor of the class User
- */
+*/
 User::User() {}
 /**
  * @brief Constructor of the class User
  * @param name name of the user
  * @param identifier identifier of the user
  * @param password password of the user
- */
+*/
 User::User(const std::string& name, const int identifier,
-
            const std::string& password)
     : name_(name),
       password_(password),

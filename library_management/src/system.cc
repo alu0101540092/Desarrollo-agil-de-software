@@ -99,6 +99,7 @@ void System::RemoveAuthenticatedUser(const User& user) {
     }
   }
 }
+
 /**
  * @brief Function to get the books of the system
  *
@@ -125,6 +126,9 @@ User& System::GetUser(const std::string& user) const {
       return users_[i];
     }
   }
+  std::cerr << "Error: user not found" << std::endl;
+  exit(EXIT_FAILURE);
+  return users_[0];
 }
 
 /**

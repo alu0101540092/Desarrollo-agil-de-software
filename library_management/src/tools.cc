@@ -50,7 +50,7 @@ void Password(System& system, User& user) {
 std::vector<Book*> Search(System& system) {
   std::string name;
   std::cout << "\n###### Search ######\n\n";
-  std::cout << "\nWhat are you looking for?: " << std::endl;
+  std::cout << "\nWhat are you looking for?: ";
   std::cin >> name;
   std::transform(
       name.begin(), name.end(), name.begin(),
@@ -208,9 +208,7 @@ bool PostUserMenu(System& systema, User& user) {
           int book_to_borrow{-1};
           while (0 > book_to_borrow ||
                  book_to_borrow >= available_books.size()) {
-            std::cout << "Enter the number of the book you want to borrow, "
-                         "starting from 0"
-                      << std::endl;
+            std::cout << "Enter the number of the book you want to borrow, starting from 0: ";
             std::cin >> book_to_borrow;
           }
           systema.BorrowBook(*available_books[book_to_borrow], user);
@@ -242,9 +240,7 @@ bool PostUserMenu(System& systema, User& user) {
           int book_to_return{-1};
           while (0 > book_to_return ||
                  book_to_return >= borrowed_books.size()) {
-            std::cout << "Enter the number of the book you want to return, "
-                         "starting from 0"
-                      << std::endl;
+            std::cout << "Enter the number of the book you want to return, starting from 0: ";
             std::cin >> book_to_return;
           }
           systema.ReturnBook(*borrowed_books[book_to_return], user);
@@ -276,9 +272,7 @@ bool PostUserMenu(System& systema, User& user) {
           int book_to_reserve{-1};
           while (0 > book_to_reserve ||
                  book_to_reserve >= available_books.size()) {
-            std::cout << "Enter the number of the book you to reserve, "
-                         "starting from 0"
-                      << std::endl;
+            std::cout << "Enter the number of the book you want to reserve, starting from 0: ";
             std::cin >> book_to_reserve;
           }
           systema.ReserveBook(*available_books[book_to_reserve], user);
@@ -311,8 +305,7 @@ bool PostUserMenu(System& systema, User& user) {
           while (0 > book_to_cancel_reservation ||
                  book_to_cancel_reservation >= reserved_books.size()) {
             std::cout << "Enter the number of the book you want to cancel the "
-                         "reserve of, starting from 0"
-                      << std::endl;
+                         "reserve of, starting from 0: ";
             std::cin >> book_to_cancel_reservation;
           }
           systema.CancelReservation(*reserved_books[book_to_cancel_reservation],
