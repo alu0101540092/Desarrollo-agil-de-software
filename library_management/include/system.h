@@ -34,44 +34,29 @@ class System {
   void AddBook(const Book& book);
   void AddUser(const User& user);
   void AddAuthenticatedUser(const User& user);
-  void AddBorrowedBook(const Book& book);
-  void AddAvailableBook(const Book& book);
-  void AddReservedBook(const Book& book);
-  void AddLostBook(const Book& book);
-  void AddDamagedBook(const Book& book);
 
   void RemoveBook(const Book& book);
   void RemoveUser(const User& user);
   void RemoveAuthenticatedUser(const User& user);
-  void RemoveBorrowedBook(const Book& book);
-  void RemoveAvailableBook(const Book& book);
-  void RemoveReservedBook(const Book& book);
-  void RemoveLostBook(const Book& book);
-  void RemoveDamagedBook(const Book& book);
 
-  void BorrowBook(const Book& book, const User& user);
-  void ReturnBook(const Book& book);
-  void ReserveBook(const Book& book, const User& user);
-  void CancelReservation(const Book& book);
-  void ReportLostBook(const Book& book);
-  void ReportDamagedBook(const Book& book);
+  void BorrowBook(Book& book, const User& user);
+  void ReturnBook(Book& book, const User& user);
+  void ReserveBook(Book& book, const User& user);
+  void CancelReservation(Book& book,const User& user);
+  void ReportLostBook(Book& book);
+  void ReportDamagedBook(Book& book);
 
   bool ExistentUser(const std::string& user);
   bool VerifyPassword(const std::string& user, const std::string& password);
-  void ExistentReference(const std::string& book);
+  std::vector<Book*> ExistentReference(const std::string& book);
   void ChangePassword(User& user, const std::string& password);
   
   /// GETTERS && SETTERS
-  std::vector<Book> GetBooks();
-  std::vector<User> GetUsers();
-  User GetUser(const std::string& user);
-  bool GetAuthenticatedUser(const std::string& user);
-  std::vector<User> GetAuthenticatedUsers();
-  std::vector<Book> GetBorrowedBooks();
-  std::vector<Book> GetAvailableBooks();
-  std::vector<Book> GetReservedBooks();
-  std::vector<Book> GetLostBooks();
-  std::vector<Book> GetDamagedBooks();
+  std::vector<Book> GetBooks() const;
+  std::vector<User> GetUsers() const;
+  User& GetUser(const std::string& user) const;
+  bool GetAuthenticatedUser(const std::string& user) const;
+  std::vector<User> GetAuthenticatedUsers() const;
 
   /// PRINTERS
   void PrintBooks();
@@ -86,9 +71,5 @@ class System {
   static std::vector<Book> books_;
   static std::vector<User> users_;
   static std::vector<User> authenticated_users_;
-  static std::vector<Book> borrowed_books_;
-  static std::vector<Book> available_books_;
-  static std::vector<Book> reserved_books_;
-  static std::vector<Book> lost_books_;
-  static std::vector<Book> damaged_books_;
+  
 };

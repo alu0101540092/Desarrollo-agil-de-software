@@ -12,11 +12,9 @@
  * @see
  */
 
-
 #include <iostream>
 #include <string>
 #include <vector>
-#include "loan.h"
 
 #pragma once
 
@@ -26,15 +24,17 @@
 class User {
 public:
   /// CONSTRUCTORS
-  User(const std::string& name, const int indentifier, const std::string& password);
+  User();
+  User(const std::string& name, const int indentifier,
+       const std::string& password);
   /// MEMBER FUNCTIONS
   bool IsAuthenticated() const;
   bool Login(const std::string& password);
-  // bool BorrowBook(const Catalog& catalog, const std::string& book_name);
-  // bool ReturnBook(const Catalog& catalog, const std::string& book_name);
+
   /// GETTERS & SETTERS
   std::string GetName() const;
   int GetIdentifier() const;
+  std::string GetPassword() const;
   void SetPassword(const std::string& password);
 
 private:
@@ -42,7 +42,7 @@ private:
   std::string password_;
   int identifier_;
   bool is_authenticated_;
-  std::vector<Loan> borrowed_books_list_;
 };
-
 std::ostream& operator<<(std::ostream& output, const User& user);
+bool operator==(const User& user_1, const User& user_2);
+bool operator!=(const User& user_1, const User& user_2);
