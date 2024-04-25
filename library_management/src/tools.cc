@@ -51,7 +51,9 @@ std::vector<Book*> Search(System& system) {
   std::string name;
   std::cout << "\n###### Search ######\n\n";
   std::cout << "\nWhat are you looking for?: ";
-  std::cin >> name;
+  // To remove the posible newline characters remaining in stream
+  std::cin.ignore();
+  getline(std::cin, name);
   std::transform(
       name.begin(), name.end(), name.begin(),
       [](unsigned char c) -> unsigned char { return std::tolower(c); });
@@ -69,7 +71,8 @@ User* SignIn(System& systema) {
   std::cout << "\n###### Sign in ######\n\n";
   std::cout << "\nUsername: ";
   std::cin >> username;
-  if (systema.ExistentUser(username) && !systema.GetAuthenticatedUser(username)) {
+  if (systema.ExistentUser(username) &&
+      !systema.GetAuthenticatedUser(username)) {
     do {
       std::cout << "\nPassword: ";
       std::cin >> password;
@@ -175,7 +178,8 @@ bool PostUserMenu(System& systema, User& user) {
           } else {
             std::cout << "\nBooks found\n";
             for (int i = 0; i < results.size(); i++) {
-              std::cout << "Book number: " << i + 1 << *results[i] << std::endl;
+              std::cout << "Book number  " << i + 1 << ": " << *results[i]
+                        << std::endl;
             }
           }
         }
@@ -210,7 +214,8 @@ bool PostUserMenu(System& systema, User& user) {
           int book_to_borrow{-1};
           while (0 > book_to_borrow ||
                  book_to_borrow >= available_books.size()) {
-            std::cout << "Enter the number of the book you want to borrow, starting from 0: ";
+            std::cout << "Enter the number of the book you want to borrow, "
+                         "starting from 0: ";
             std::cin >> book_to_borrow;
           }
           systema.BorrowBook(*available_books[book_to_borrow], user);
@@ -242,7 +247,8 @@ bool PostUserMenu(System& systema, User& user) {
           int book_to_return{-1};
           while (0 > book_to_return ||
                  book_to_return >= borrowed_books.size()) {
-            std::cout << "Enter the number of the book you want to return, starting from 0: ";
+            std::cout << "Enter the number of the book you want to return, "
+                         "starting from 0: ";
             std::cin >> book_to_return;
           }
           systema.ReturnBook(*borrowed_books[book_to_return], user);
@@ -274,7 +280,8 @@ bool PostUserMenu(System& systema, User& user) {
           int book_to_reserve{-1};
           while (0 > book_to_reserve ||
                  book_to_reserve >= available_books.size()) {
-            std::cout << "Enter the number of the book you want to reserve, starting from 0: ";
+            std::cout << "Enter the number of the book you want to reserve, "
+                         "starting from 0: ";
             std::cin >> book_to_reserve;
           }
           systema.ReserveBook(*available_books[book_to_reserve], user);
