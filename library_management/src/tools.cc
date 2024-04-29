@@ -29,9 +29,11 @@ void Password(System& system, User& user) {
     if (system.VerifyPassword(username, password)) {
       /// Getting the new password
       do {
-        std::cout << "\nNew password: ";
+        std::cout << "\nNew password (must be longer than 3 characters and "
+                     "different to the old one): ";
         std::cin >> new_password;
-      } while (new_password.size() < 4);
+      } while ((new_password == user.GetPassword()) ||
+               (new_password.size() < 4));
       system.ChangePassword(user, new_password);
       std::cout << "\nPassword changed successfully\n";
     } else {
