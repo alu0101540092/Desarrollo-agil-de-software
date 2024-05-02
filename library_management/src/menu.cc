@@ -16,10 +16,6 @@
 #include "../include/tools.h"
 #include "../include/user.h"
 
-// ToDo : enum BookState
-// ToDo : main -> constructor system. Procesar ficheros
-// ToDo : Loan,Reserve... darle una vuelta a esas clases
-
 int main(int argc, char* argv[]) {
   const std::string KBooksDataFilename{"books.txt"};
   const std::string KUsersDataFilename{"users.txt"};
